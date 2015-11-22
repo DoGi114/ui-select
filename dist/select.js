@@ -1228,7 +1228,7 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
 
       ctrl.getPlaceholder = function(){
         //Refactor single?
-        if($select.selected && $select.selected.length) return;
+        if($select.selected.length) return;
         return $select.placeholder;
       };
 
@@ -1323,13 +1323,11 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
           }
         }
         $select.selected = ngModel.$viewValue;
+        $selectMultiple.refreshComponent();
         scope.$evalAsync(); //To force $digest
       };
 
       scope.$on('uis:select', function (event, item) {
-        if($select.selected.length >= $select.limit) {
-          return;
-        }
         $select.selected.push(item);
         $selectMultiple.updateModel();
       });
